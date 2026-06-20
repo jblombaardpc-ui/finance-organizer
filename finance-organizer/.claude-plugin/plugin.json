@@ -5,5 +5,6 @@
   "author": {
     "name": "Finance Organizer Project"
   },
+  "license": "MIT",
   "keywords": ["finance", "bookkeeping", "onboarding", "beancount", "inbox", "small-business", "personal-finance"]
 }

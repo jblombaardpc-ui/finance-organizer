@@ -21,3 +21,7 @@ Onboarding will offer to use these if installed — they make setup richer but a
 Say **"set up my finances"** / **"get me started"** → the `finance-onboard` skill walks through company structure, accounts, overlap rules, locality & tax, ledger choice (Beancount recommended; it can be installed automatically), branding, and which optional modules to turn on. It writes everything to `.finance-organizer/` (with your approval) and offers a nightly inbox routine.
 
 See `finance-organizer/README.md` for the skill list and `finance-organizer/references/config-schema.md` for the config contract.
+
+## License
+
+MIT — see [LICENSE](LICENSE). Free to use, modify, and share. Keep your own `.finance-organizer/` data private (it's gitignored).
