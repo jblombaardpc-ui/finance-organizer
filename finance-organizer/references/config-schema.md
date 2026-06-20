@@ -11,10 +11,11 @@ All paths are **relative to the user's working folder** (portable across machine
   - `name`, `primary_contact`
   - `locality`: `country`, `region`, `currency`
   - `fiscal_year_end` — `MM-DD` for the main business (personal sets are usually `12-31`).
+- `household` — `size` (number of household members to track) and `members` (list of names). Set from the onboarding question "how many household members?"; used to size the personal sets and to scope whose expenses are claimable (e.g. the claims module).
 - `ledger`:
   - `backend` — `beancount` | `simple` (CSV/spreadsheet).
   - `beancount_main` — path to the main ledger file (if Beancount).
-- `sets_of_books` — a list; **this is the generalization of "three sets of books."** Each item:
+- `sets_of_books` — a list; **this is the generalization of "three sets of books."** The number of `type: business` entries = how many companies you track, and the `type: personal` entries correspond to household members — both come from the two onboarding counts. Each item:
   - `id` (slug), `label`, `type` (`business` | `personal`), `fiscal_year_end`, `folder`, optional `ledger_main`.
 - `overlap` — how personal/business overlap is booked (the shareholder-loan / due-to/from pattern):
   - `shareholder_loan_account` (e.g. `Liabilities:Current:DueToShareholder`)

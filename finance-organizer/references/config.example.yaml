@@ -13,6 +13,10 @@ company:
     currency: "CAD"
   fiscal_year_end: "08-31"   # business FYE; personal sets use 12-31
 
+household:                   # from onboarding: "how many household members?"
+  size: 2
+  members: ["Jane Doe", "John Doe"]
+
 ledger:
   backend: "beancount"        # beancount | simple
   beancount_main: "Business - Example Pro Corp/Beancount/main.beancount"
