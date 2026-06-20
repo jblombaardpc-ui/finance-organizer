@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.tmp
+~$*
+# never commit a user's real finances if someone runs onboarding inside this repo
+.finance-organizer/

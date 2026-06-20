@@ -1,0 +1,108 @@
+# Example .finance-organizer/config.yaml
+# A fictional worked example. Onboarding produces a file like this from the user's
+# answers — replace every value below with your own. All last-4 digits, names, and
+# numbers here are made up.
+version: 1
+
+company:
+  name: "Example Pro Corp"
+  primary_contact: "Jane Doe"
+  locality:
+    country: "Canada"
+    region: "Alberta"
+    currency: "CAD"
+  fiscal_year_end: "08-31"   # business FYE; personal sets use 12-31
+
+ledger:
+  backend: "beancount"        # beancount | simple
+  beancount_main: "Business - Example Pro Corp/Beancount/main.beancount"
+
+sets_of_books:
+  - id: "business"
+    label: "Example Pro Corp"
+    type: "business"
+    fiscal_year_end: "08-31"
+    folder: "Business - Example Pro Corp"
+    ledger_main: "Business - Example Pro Corp/Beancount/main.beancount"
+  - id: "owner"
+    label: "Jane Doe (personal)"
+    type: "personal"
+    fiscal_year_end: "12-31"
+    folder: "Personal - Jane Doe"
+    ledger_main: "Personal - Jane Doe/Beancount/main.beancount"
+  - id: "spouse"
+    label: "John Doe (personal)"
+    type: "personal"
+    fiscal_year_end: "12-31"
+    folder: "Personal - John Doe"
+
+overlap:
+  shareholder_loan_account: "Liabilities:Current:DueToShareholder"
+  due_from_business_account: "Assets:DueFromBusiness"
+  personal_card_expense_doc: "Business - Example Pro Corp/Reports/Expenses Paid on Personal Cards.md"
+
+accounts:
+  - last4: "1111"
+    name: "Business chequing"
+    set: "business"
+    role: "operating"
+  - last4: "2222"
+    name: "Business Visa"
+    set: "business"
+    role: "card"
+  - last4: "3333"
+    name: "Personal Visa"
+    set: "owner"
+    role: "card"
+  - last4: "4444"
+    name: "Joint chequing (held in full under owner; spouse side = transfer)"
+    set: "owner"
+    role: "operating"
+
+tax:
+  registrations:
+    - kind: "GST/HST"
+      number: "000000000RT0001"
+      rate: 0.05
+      filing: "quarterly"
+  notes: >
+    Example only. Describe your own jurisdiction's rules here (e.g. which sales tax
+    applies, the rate, and how often you file). Leave input-tax credits for your
+    accountant unless told otherwise.
+
+filing:
+  inbox: "Finance Inbox"
+  rename_ledger_per_set: true
+
+modules:
+  related_party: true
+  claims_helper: true
+  payment_plan: true
+  brand_output: false
+
+related_parties:
+  - name: "Related Co"
+    type: "related-company"
+    cards: ["8881", "8882"]
+    notes: "Example: business contributes; reimbursements owed tracked via flag-expense."
+
+claims:
+  plan_name: "Health Spending Account"
+  eligible: ["prescriptions", "dental", "vision", "out-of-pocket medical not covered by other insurance"]
+  ineligible: ["cosmetics / skincare", "gym / fitness"]
+  admin_fee_pct: 0.05
+  tax_on_fee_pct: 0.05
+  form_path: "Personal - Jane Doe/Claims/Claim Form - {period} (working).xlsx"
+  period_end: "08-31"
+
+payment_plan:
+  daily_limit: 6000
+  currency: "CAD"
+  calendar_id: "primary"
+
+branding:
+  guidelines_path: ".finance-organizer/brand.md"
+
+cadence:
+  inbox_processing: "0 22 * * *"
+  check_in: "weekly Monday"

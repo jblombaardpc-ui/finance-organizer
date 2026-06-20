@@ -1,0 +1,17 @@
+{
+  "name": "finance-organizer-marketplace",
+  "owner": {
+    "name": "Finance Organizer Project"
+  },
+  "metadata": {
+    "description": "Shareable onboarding-driven finance organizer for individuals and small businesses.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "finance-organizer",
+      "source": "./finance-organizer",
+      "description": "Interview-based setup, then Finance Inbox triage & filing and configurable bookkeeping (Beancount or simple ledger), tailored to the user's company structure, accounts, locality/tax, and branding. Optional related-party, claims, payment-plan, and brand-output modules."
+    }
+  ]
+}
