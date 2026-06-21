@@ -28,11 +28,12 @@ All paths are **relative to the user's working folder** (portable across machine
 - `filing`:
   - `inbox` — inbox folder name (default `Finance Inbox`).
   - `rename_ledger_per_set` (bool) — keep one `Reports/File Rename Ledger.csv` per set.
-- `modules` — booleans: `related_party`, `claims_helper`, `payment_plan`, `brand_output`.
+- `modules` — booleans: `related_party`, `claims_helper`, `payment_plan`, `brand_output`, `integrations`.
 - `related_parties` *(if module on)* — list of `{name, type, cards[], notes}`.
 - `claims` *(if module on)* — `plan_name`, `eligible[]`, `ineligible[]`, `admin_fee_pct`, `tax_on_fee_pct`, `form_path`, `period_end` (`MM-DD`).
 - `payment_plan` *(if module on)* — `daily_limit`, `currency`, `calendar_id`.
 - `branding` — `guidelines_path` (default `.finance-organizer/brand.md`).
+- `integrations` *(if module on)* — financial connectors the user has linked, tool-agnostic: `accounting` (`quickbooks` | `xero` | `none`), `payments` (list, e.g. `square`, `stripe`, `paypal`), `bank_feed` (bool), `notes`. Drives the **sync-financials** skill. The plugin never links a tool itself — the user connects each via their connector settings (see `CONNECTORS.md`).
 - `cadence` — `inbox_processing` (cron or "off"), `check_in` (e.g. "weekly Monday").
 
 ## Reading config in a script

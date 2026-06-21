@@ -83,6 +83,7 @@ modules:
   claims_helper: true
   payment_plan: true
   brand_output: false
+  integrations: true
 
 related_parties:
   - name: "Related Co"
@@ -103,6 +104,12 @@ payment_plan:
   daily_limit: 6000
   currency: "CAD"
   calendar_id: "primary"
+
+integrations:                  # financial tools you've connected (tool-agnostic)
+  accounting: "quickbooks"     # quickbooks | xero | none
+  payments: ["square", "stripe"]   # square | stripe | paypal | ...
+  bank_feed: false
+  notes: "Connect each via your connector settings; the plugin never connects for you."
 
 branding:
   guidelines_path: ".finance-organizer/brand.md"

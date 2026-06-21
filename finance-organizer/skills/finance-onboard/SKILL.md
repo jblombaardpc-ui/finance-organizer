@@ -45,6 +45,7 @@ Wait for a full answer before the next question. Map answers onto the config sch
 7. **Optional modules.** Explain each in one line and ask which to enable → `modules`:
    - related-party & reimbursements, health/benefit claims, payment plans + reminders, brand-aware outputs.
    For each enabled module, ask the few extra fields it needs (e.g. claims: plan name + eligible/ineligible lists + period end; payment-plan: daily transfer limit + calendar).
+8. **Financial connectors (optional).** Ask whether they use financial tools you can pull from — **accounting** (QuickBooks, Xero) and/or **payments/POS** (Square, Stripe, PayPal). Record what they want to use → `integrations` (and set `modules.integrations`). **Guide them to link each via their connector settings — never connect on their behalf.** These feed the **sync-financials** skill; if they connect nothing, everything still works from the inbox + ledger. See `../../CONNECTORS.md`.
 
 ## 3. Write the config (approval gate)
 

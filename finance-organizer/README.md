@@ -28,6 +28,7 @@ learn   ← invoked by any skill when something new should be remembered
 | **claims-helper** *(opt)* | a benefit-eligible bill; "add to my claim" | Maintain a per-period claims tracker/form (e.g. a health-spending account); carry forward each period. |
 | **payment-plan** *(opt)* | "build a payment plan" | Batch invoices within a configurable daily transfer limit; save a plan; add calendar reminders. |
 | **brand-output** *(opt)* | "make an invoice/report" | Apply the captured branding to generated documents. |
+| **sync-financials** *(opt)* | "sync Square/QuickBooks", "import my sales/invoices" | Pull invoices/sales from connected payment tools and reconcile against accounting tools, into the inbox/ledger flow. Tool-agnostic — see `CONNECTORS.md`. |
 | **learn** | something new worth remembering | Propose adding a new rule/mapping to `memory.md` (or config) — always with confirm-before-save. |
 
 ## Config
@@ -40,5 +41,6 @@ Everything is driven by `.finance-organizer/config.yaml` in the user's working f
 - `openpyxl` for spreadsheet outputs; `pdftotext` (poppler) for content-level dedup (optional).
 - Calendar steps use the user's connected calendar.
 - *Optional:* the **finance** plugin for advanced close / GAAP statements / variance / audit — the built-in `reports` skill covers everyday statements.
+- *Optional:* financial connectors — QuickBooks/Xero (accounting), Square/Stripe/PayPal (payments) — for the `sync-financials` module; link them via your connector settings (see `CONNECTORS.md`).
 
 Scripts in `scripts/` take paths/values as arguments — no hardcoded machine paths — so the plugin is portable across computers and users.
