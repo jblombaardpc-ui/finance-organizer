@@ -1,6 +1,6 @@
 {
   "name": "finance-organizer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Onboarding-driven personal + small-business finance organizer. An interview captures the user's company structure, sets of books, account map, personal/business overlap, locality/tax profile, and branding into a per-user config; then Finance Inbox triage & filing and a configurable ledger (Beancount or a simple spreadsheet) run off that config. Optional modules: related-party & reimbursements, health/benefit claims, payment plans + reminders, and brand-aware outputs. Learns as it goes, asking before saving anything new to memory.",
   "author": {
     "name": "Finance Organizer Project"

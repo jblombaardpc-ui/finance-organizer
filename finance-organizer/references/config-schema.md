@@ -21,6 +21,7 @@ All paths are **relative to the user's working folder** (portable across machine
   - `shareholder_loan_account` (e.g. `Liabilities:Current:DueToShareholder`)
   - `due_from_business_account` (e.g. `Assets:DueFromBusiness`)
   - `personal_card_expense_doc` — path to the "business expenses paid on personal cards" log.
+  - `personal_card_expense_copies_dir` — folder in the business set holding COPIES of invoices for business expenses paid on a personal account (default `<business set>/Expenses/Paid on Personal Accounts/`; has a `Candidates (pending review)/` subfolder for unconfirmed items).
 - `accounts` — the account map; each item: `last4`, `name`, `set` (matches a `sets_of_books.id`), `role` (`operating`/`savings`/`card`/`loc`/`tax`/…), optional `owner`.
 - `tax`:
   - `registrations` — list of `{kind, number, rate, filing}` (e.g. GST/HST, VAT, sales tax).

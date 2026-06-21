@@ -44,6 +44,7 @@ overlap:
   shareholder_loan_account: "Liabilities:Current:DueToShareholder"
   due_from_business_account: "Assets:DueFromBusiness"
   personal_card_expense_doc: "Business - Example Pro Corp/Reports/Expenses Paid on Personal Cards.md"
+  personal_card_expense_copies_dir: "Business - Example Pro Corp/Expenses/Paid on Personal Accounts"
 
 accounts:
   - last4: "1111"

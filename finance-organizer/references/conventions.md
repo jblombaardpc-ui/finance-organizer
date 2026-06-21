@@ -6,6 +6,14 @@ Generic version of a proven filing system. Everything keys off the user's `confi
 
 For each inbox document, decide **which set of books** it belongs to (from content **and** the account/card used — look it up in `accounts[]`), then file within that set's `folder`. A business expense paid on a personal account is **still a business expense** — book it to the business set and log it in the `overlap.personal_card_expense_doc`. If genuinely unsure of the set, or business-vs-personal, **ask the user** (and offer to remember the answer via the learn protocol).
 
+### Business expenses paid on a personal account — keep a copy in the business books
+
+When a business expense is paid on a personal account, the **original** stays in the personal set, but place a **copy** of the invoice in the business set too, so that set holds its own supporting documents at year-end. Put copies in `overlap.personal_card_expense_copies_dir` (default `<business set>/Expenses/Paid on Personal Accounts/`); use its `Candidates (pending review)/` subfolder when the business-vs-personal call isn't yet confirmed. Log the copy in the **business** set's rename ledger with `action=copy` (it shares the personal original's md5 — dedup is per-set, so a copy in another set is legitimate, not a duplicate). **Exception:** travel receipts stay only with their trip and are cross-referenced in the report by path.
+
+### Reason about business use — flag candidates, don't guess
+
+For anything on a personal account, actively judge whether it could *reasonably* be a business expense given the user's business (`memory.md`) and their locality/tax rules (`config.tax`, e.g. deductibility and any input-tax-credit on the embedded tax). If it's plausibly business, **flag it as a candidate** — add it to `overlap.personal_card_expense_doc` and drop a copy in the `Candidates (pending review)/` folder — for the user to confirm later. **Flag rather than guess, flag rather than silently treat as personal, and never book a flagged candidate until the user confirms.** Typical candidates: software/subscriptions used for work, professional memberships/licences/dues, tools/supplies/equipment, training/courses/conferences, work travel, and the business-use share of phone/internet.
+
 ## Filenames (all source docs except bank statements)
 
 - `YYYY-MM-DD Vendor Amount.ext` — receipts/expenses/payments with a clear total (e.g. `2025-11-01 GoDaddy 149.09.pdf`). Amount = total, no currency symbol; foreign-currency docs named in their own currency.
