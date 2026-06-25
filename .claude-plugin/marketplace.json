@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Shareable onboarding-driven finance organizer for individuals and small businesses.",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {
       "name": "finance-organizer",
       "source": "./finance-organizer",
-      "description": "Interview-based setup, then Finance Inbox triage & filing and configurable bookkeeping (Beancount or simple ledger), tailored to the user's company structure, accounts, locality/tax, and branding. Optional related-party, claims, payment-plan, and brand-output modules."
+      "description": "Interview-based setup, then Finance Inbox triage & filing and configurable bookkeeping (Beancount or simple ledger), tailored to the user's company structure, accounts, locality/tax, and branding. Optional related-party, claims, payment-plan, bill-reminders, and brand-output modules."
     }
   ]
 }

@@ -11,7 +11,7 @@ finance-onboard  ──writes──>  .finance-organizer/config.yaml   (the cont
         │
         ▼  every skill reads the config
 file-inbox → book-entries → (flag-expense)        ← core
-related-party · claims-helper · payment-plan · brand-output   ← optional modules
+related-party · claims-helper · payment-plan · bill-reminders · brand-output   ← optional modules
 learn   ← invoked by any skill when something new should be remembered
 ```
 
@@ -26,7 +26,8 @@ learn   ← invoked by any skill when something new should be remembered
 | **reports** | "show my P&L", "balance sheet", "where did my money go" | Income statement + balance sheet + a plain-English summary from the ledger (Beancount or simple). |
 | **related-party** *(opt)* | related-company flows; "reimbursement owed" | Track inter-entity contributions and reimbursements; flag misdirected payments. |
 | **claims-helper** *(opt)* | a benefit-eligible bill; "add to my claim" | Maintain a per-period claims tracker/form (e.g. a health-spending account); carry forward each period. |
-| **payment-plan** *(opt)* | "build a payment plan" | Batch invoices within a configurable daily transfer limit; save a plan; add calendar reminders. |
+| **payment-plan** *(opt)* | "build a payment plan" | Batch a one-off pile of invoices within a configurable daily transfer limit; save a plan; add calendar reminders. |
+| **bill-reminders** *(opt)* | "track my due dates", "remind me when bills are due", after statements are filed | Read the latest statement per credit/loan account for the due date + minimum payment, maintain a Payments Due tracker, and put reminders on the calendar ahead of each (manual = "pay", pre-authorized = "ensure funds"); optional recurring refresh. |
 | **brand-output** *(opt)* | "make an invoice/report" | Apply the captured branding to generated documents. |
 | **sync-financials** *(opt)* | "sync Square/QuickBooks", "import my sales/invoices" | Pull invoices/sales from connected payment tools and reconcile against accounting tools, into the inbox/ledger flow. Tool-agnostic — see `CONNECTORS.md`. |
 | **learn** | something new worth remembering | Propose adding a new rule/mapping to `memory.md` (or config) — always with confirm-before-save. |

@@ -83,6 +83,7 @@ modules:
   related_party: true
   claims_helper: true
   payment_plan: true
+  bill_reminders: true
   brand_output: false
   integrations: true
 
@@ -105,6 +106,18 @@ payment_plan:
   daily_limit: 6000
   currency: "CAD"
   calendar_id: "primary"
+
+bill_reminders:                # recurring statement due dates + minimum payments → calendar
+  calendar_id: "primary"
+  lead_days: 3                 # remind this many days before each due date
+  tracker_path: "Business - Example Pro Corp/Reports/Payments Due.md"
+  refresh: "recurring"         # recurring | on_demand
+  refresh_cron: "0 9 8 * *"    # if recurring: when to regenerate (e.g. 9am on the 8th, after statements land)
+  accounts:                    # which mapped accounts to remind on, and how they're paid
+    - last4: "2222"            # Business Visa
+      mode: "manual"           # manual = you pay it → "Pay"; auto_debit = pre-authorized → "Ensure funds"
+    - last4: "3333"            # Personal Visa
+      mode: "manual"
 
 integrations:                  # financial tools you've connected (tool-agnostic)
   accounting: "quickbooks"     # quickbooks | xero | none
