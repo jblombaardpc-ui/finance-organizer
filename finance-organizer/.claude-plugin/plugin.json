@@ -1,7 +1,7 @@
 {
   "name": "finance-organizer",
   "version": "0.3.0",
-  "description": "Onboarding-driven personal + small-business finance organizer. An interview captures the user's company structure, sets of books, account map, personal/business overlap, locality/tax profile, and branding into a per-user config; then Finance Inbox triage & filing and a configurable ledger (Beancount or a simple spreadsheet) run off that config. Optional modules: related-party & reimbursements, health/benefit claims, one-off payment plans, bill reminders (recurring statement due dates + minimum payments → calendar), and brand-aware outputs. Learns as it goes, asking before saving anything new to memory.",
+  "description": "Onboarding-driven personal + small-business finance organizer. An interview captures the user's structure, sets of books, account map, personal/business overlap, locality/tax, and branding into a per-user config; then Finance Inbox filing and a configurable ledger (Beancount or simple spreadsheet) run off it. Optional modules: related-party, claims, payment plans, bill reminders (due dates to calendar), and brand outputs.",
   "author": {
     "name": "Finance Organizer Project"
   },
