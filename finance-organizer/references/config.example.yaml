@@ -102,13 +102,19 @@ claims:
   form_path: "Personal - Jane Doe/Claims/Claim Form - {period} (working).xlsx"
   period_end: "08-31"
 
+calendar:                      # provider-agnostic — Google Calendar, Microsoft Outlook/365, etc.
+  provider: "google"           # google | microsoft | apple | other (the calendar connector you linked)
+  id: "REPLACE_WITH_FINANCE_CALENDAR_ID"   # a dedicated "Finance" calendar is recommended (you create it; the plugin can't)
+  timezone: "America/Edmonton"             # IANA timezone
+  # Google example id: 7e5f…@group.calendar.google.com  | Microsoft: the calendar's name or id
+
 payment_plan:
   daily_limit: 6000
   currency: "CAD"
-  calendar_id: "primary"
+  # calendar_id: optional override — defaults to calendar.id above
 
 bill_reminders:                # recurring statement due dates + minimum payments → calendar
-  calendar_id: "primary"
+  # calendar_id: optional override — defaults to calendar.id above
   lead_days: 3                 # remind this many days before each due date
   tracker_path: "Business - Example Pro Corp/Reports/Payments Due.md"
   refresh: "recurring"         # recurring | on_demand

@@ -13,6 +13,13 @@ A skill might say "pull recent invoices from `~~payments`." At runtime that mean
 | Accounting | `~~accounting` | QuickBooks, Xero |
 | Payments / POS | `~~payments` | Square, Stripe, PayPal |
 | Bank feed | `~~bank` | bank/aggregator feeds, where available |
+| Calendar | `~~calendar` | Google Calendar, Microsoft Outlook / Office 365, Apple/other (whichever calendar connector you've linked) |
+
+## Calendar (reminders & payment plans)
+
+The **bill-reminders** and **payment-plan** skills (and claims-submission reminders) write events to `~~calendar` — whatever calendar tool you've connected. It works the same whether that's **Google Calendar** or **Microsoft Outlook / Office 365**; the skill calls your connected calendar's create/list/update-event tools rather than any one provider's API.
+
+You record your choice in `config.yaml` under `calendar` (`provider`, `id`, `timezone`). A **dedicated "Finance" calendar** is recommended so money events stay separate from your main calendar. The plugin **does not create the calendar for you** — most calendar connectors can add events but not new calendars — so onboarding walks you through creating the Finance calendar in your provider, then captures its id.
 
 ## Connecting a tool
 

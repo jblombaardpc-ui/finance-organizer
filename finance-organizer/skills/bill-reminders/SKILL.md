@@ -14,8 +14,12 @@ description: >
 
 # Bill reminders — recurring due dates + minimum payments
 
-Read `.finance-organizer/config.yaml` → `bill_reminders` (`calendar_id`, `lead_days`,
-`accounts[]`, `refresh`, optional `tracker_path`) and the global `accounts[]` map.
+Read `.finance-organizer/config.yaml` → `bill_reminders` (`lead_days`, `accounts[]`,
+`refresh`, optional `tracker_path` and `calendar_id`), the `calendar` block (`provider`,
+`id`, `timezone`), and the global `accounts[]` map. Calendar work goes through the user's
+connected calendar connector (`~~calendar`) — it works the same for **Google Calendar** or
+**Microsoft Outlook / Office 365**; call that connector's create/list/update-event tools
+rather than any one provider's API.
 Operate on the user's working folder. This is a **read-only** pass over statements — it
 never books or moves money; it only reads statements and writes a tracker doc + calendar
 events.
@@ -56,8 +60,10 @@ say so in the event so the minimum isn't mistaken for the amount to pay.
    payment, due date, mode, and the statement date it came from. Overwrite the row for an
    account each time you refresh it.
 
-4. **Create the calendar reminders.** On `bill_reminders.calendar_id`, create one event per
-   account, `lead_days` (default 3) **before** the due date, at ~09:00 local time:
+4. **Create the calendar reminders.** Using the connected calendar connector (`~~calendar` —
+   Google Calendar, Microsoft Outlook / Office 365, etc.), on the configured calendar
+   (`bill_reminders.calendar_id`, else `calendar.id`; timezone `calendar.timezone`), create
+   one event per account, `lead_days` (default 3) **before** the due date, at ~09:00 local time:
    - title: `Pay <account> — due <Mon D>` (manual) or `Ensure funds: <account> — auto-debit <Mon D>` (auto_debit);
    - description: balance, minimum (or fixed) payment, exact due date, the source statement date, and the "minimum is the floor — you normally pay in full" note for revolving accounts;
    - `overrideReminders`: a popup the day before (1440 min) and at start (0 min).

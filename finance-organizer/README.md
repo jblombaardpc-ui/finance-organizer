@@ -40,7 +40,7 @@ Everything is driven by `.finance-organizer/config.yaml` in the user's working f
 
 - `bean-check` (Beancount) when the Beancount backend is chosen — onboarding can `pip install beancount` in the sandbox.
 - `openpyxl` for spreadsheet outputs; `pdftotext` (poppler) for content-level dedup (optional).
-- Calendar steps use the user's connected calendar.
+- Calendar steps (payment-plan, bill-reminders, claims reminders) are **provider-agnostic** — they use whatever calendar connector you've linked (Google Calendar, Microsoft Outlook / Office 365, …). Onboarding recommends a dedicated "Finance" calendar and records `provider`/`id`/`timezone` in `config.yaml` → `calendar`. See `CONNECTORS.md`.
 - *Optional:* the **finance** plugin for advanced close / GAAP statements / variance / audit — the built-in `reports` skill covers everyday statements.
 - *Optional:* financial connectors — QuickBooks/Xero (accounting), Square/Stripe/PayPal (payments) — for the `sync-financials` module; link them via your connector settings (see `CONNECTORS.md`).
 

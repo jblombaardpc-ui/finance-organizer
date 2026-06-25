@@ -10,14 +10,14 @@ description: >
 
 # Payment plan + reminders
 
-Read `.finance-organizer/config.yaml` → `payment_plan` (daily_limit, currency, calendar_id).
+Read `.finance-organizer/config.yaml` → `payment_plan` (daily_limit, currency, optional calendar_id) and the `calendar` block (`provider`, `id`, `timezone`). Calendar work goes through the user's connected calendar connector (`~~calendar`) — same flow for **Google Calendar** or **Microsoft Outlook / Office 365**.
 
 ## Procedure
 
 1. **Collect** the invoices to pay (invoice #, date, description, amount; GST/tax if relevant). If they came from the inbox, file them first (file-inbox) and log them.
 2. **Build the schedule** with `${CLAUDE_PLUGIN_ROOT}/scripts/build_payment_plan.py --invoices <csv|json> --limit <daily_limit> --start-date YYYY-MM-DD --out "<plan.md>" --batch-name "<name>"`. It batches oldest-first within the daily limit, one invoice per row, a day total per batch, and a running balance.
 3. **Save the plan** somewhere sensible in the relevant set's folder (e.g. `<set folder>/Payment Plans/`).
-4. **Add calendar events** on the user's calendar (`payment_plan.calendar_id`): one per payment day, listing that day's invoices, amount, and running balance; mark the final day's event as the last one.
+4. **Add calendar events** via the connected calendar connector (`~~calendar` — Google Calendar, Microsoft Outlook / Office 365, etc.) on the configured calendar (`payment_plan.calendar_id`, else `calendar.id`; timezone `calendar.timezone`): one per payment day, listing that day's invoices, amount, and running balance; mark the final day's event as the last one.
 
 ## Finish
 
