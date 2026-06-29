@@ -33,6 +33,10 @@ def main():
     if isinstance(cur, (dict, list)):
         import json
         print(json.dumps(cur, ensure_ascii=False))
+    elif isinstance(cur, bool):
+        print("true" if cur else "false")   # YAML-style, so shell callers can compare
+    elif cur is None:
+        print("")
     else:
         print(cur)
 

@@ -124,7 +124,8 @@ def main():
     ap.add_argument("--csv", default="")
     a = ap.parse_args()
 
-    cfg = yaml.safe_load(open(a.config))
+    with open(a.config) as f:
+        cfg = yaml.safe_load(f)
     cur = (cfg.get("company", {}).get("locality", {}) or {}).get("currency", "USD")
     sets = {s["id"]: s for s in cfg.get("sets_of_books", [])}
     if a.setid not in sets:

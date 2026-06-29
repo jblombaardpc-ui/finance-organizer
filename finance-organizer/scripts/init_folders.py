@@ -23,7 +23,8 @@ def main():
     ap.add_argument("--base", default="")
     a = ap.parse_args()
 
-    cfg = yaml.safe_load(open(a.config))
+    with open(a.config) as f:
+        cfg = yaml.safe_load(f)
     base = a.base or os.path.dirname(os.path.dirname(os.path.abspath(a.config)))
     backend = cfg.get("ledger", {}).get("backend", "beancount")
     modules = cfg.get("modules", {}) or {}

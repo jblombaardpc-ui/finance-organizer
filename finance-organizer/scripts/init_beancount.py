@@ -39,7 +39,8 @@ def main():
     ap.add_argument("--open-date", default="2000-01-01")
     a = ap.parse_args()
 
-    cfg = yaml.safe_load(open(a.config))
+    with open(a.config) as f:
+        cfg = yaml.safe_load(f)
     sets = {s["id"]: s for s in cfg.get("sets_of_books", [])}
     if a.setid not in sets:
         sys.exit(f"set '{a.setid}' not found in config")

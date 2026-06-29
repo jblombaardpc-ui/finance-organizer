@@ -35,6 +35,10 @@ def main():
             parts = [p.strip() for p in it.split("|")]
             if len(parts) < 4:
                 sys.exit(f"Bad --item (need Patient|Date|Desc|Amount[|Y/N]): {it}")
+            if len(parts) > 5:
+                sys.exit(f"Too many '|' fields in --item: {it}\n"
+                         "  '|' is the field separator — remove it from the description "
+                         "(use a dash or 'and' instead).")
             patient, sdate, desc, amt = parts[0], parts[1], parts[2], parts[3]
             elig = (parts[4] if len(parts) > 4 else "Y").upper()[:1]
             try:
