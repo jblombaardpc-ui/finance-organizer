@@ -19,7 +19,7 @@ learn   ← invoked by any skill when something new should be remembered
 
 | Skill | Triggers | Purpose |
 |---|---|---|
-| **finance-onboard** | "set up my finances", "get me started", first session | Interview → config + memory + brand; recommend companion plugins; set up the ledger; offer a nightly inbox routine. |
+| **finance-onboard** | "set up my finances", "get me started", first session | Interview → config + memory + brand; optionally take prior-year accountant/audited statements to set the chart of accounts; recommend companion plugins; set up the ledger; offer a nightly inbox routine. |
 | **file-inbox** | "clear my inbox", "file these" | Route each document to the right set of books, name per convention, dedup via the rename ledger, clear the inbox, hand off. |
 | **book-entries** | "book [month]", "do my entries", "reconcile" | Post ledger entries (Beancount or simple) per the config; validate; book when confident, flag when unsure. |
 | **flag-expense** | "flag that as…" | Annotate a transaction for later review without rebooking it. |

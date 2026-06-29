@@ -65,8 +65,22 @@ def main():
             if va:
                 opens.append((va, k))
 
-    for std in ["Income:Uncategorized", "Expenses:Uncategorized", "Equity:Opening-Balances"]:
-        opens.append((std, "standard"))
+    # Income/Expense categories: seed from the accountant's chart of accounts
+    # (prior_financials.chart_of_accounts for this set) so the user starts on the
+    # categories their accountant used; otherwise fall back to Uncategorized.
+    coa = {}
+    for pf in cfg.get("prior_financials", []) or []:
+        if pf.get("set") == a.setid:
+            coa = pf.get("chart_of_accounts", {}) or {}
+            break
+    for cat in coa.get("income", []) or []:
+        opens.append((f"Income:{tok(cat)}", f"accountant category: {cat}"))
+    for cat in coa.get("expenses", []) or []:
+        opens.append((f"Expenses:{tok(cat)}", f"accountant category: {cat}"))
+    if not (coa.get("income") or coa.get("expenses")):
+        opens.append(("Income:Uncategorized", "standard"))
+        opens.append(("Expenses:Uncategorized", "standard"))
+    opens.append(("Equity:Opening-Balances", "standard"))
 
     seen, uniq = set(), []
     for acct, note in opens:

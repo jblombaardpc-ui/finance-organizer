@@ -31,6 +31,10 @@ A sensible default the onboarding can tailor:
 - **Business set:** `Income/` (by stream) and `Expenses/` (by category, with per-vendor subfolders where useful), `Receipts/YYYY-MM/`, `Travel/YYYY-MM Place/` (trip receipts live with the trip only), `Bank Statements/`, `Reports/`, `Beancount/`.
 - **Personal set:** `Bank Statements/`, `Receipts/`, `Property/`, `Investments/`, `Insurance/`, `Tax/`, `Reports/`, `Beancount/`, plus module folders (e.g. `Claims/`).
 
+## Categories follow the accountant's chart
+
+If the user supplied prior-year accountant/audited statements at onboarding (`config.prior_financials`), treat that `chart_of_accounts` as the canonical income/expense category list for the set. Reuse those names verbatim when filing and booking so the books and reports match prior-year comparatives. Only introduce a new category when nothing fits, and route it through the learn protocol first.
+
 ## Dedup — rename ledger (one per set)
 
 Each set keeps `<set folder>/Reports/File Rename Ledger.csv`: `timestamp, action, fiscal_year, original_path, original_name, md5, new_path, notes`. Log every move/rename/dedupe-delete with the file's md5.

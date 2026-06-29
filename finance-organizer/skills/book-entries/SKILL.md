@@ -15,7 +15,7 @@ Read `.finance-organizer/config.yaml` (and `memory.md`) first. Pick the backend 
 ## Procedure
 
 1. **Pick the set + ledger** for the documents in hand (`config.sets_of_books`). Reconcile by statement cycle.
-2. **Apply the conventions** for the chosen backend: book card/LOC payments once from the bank side; route overlap to `config.overlap` accounts (and log personal-card business spend); split tax per `config.tax` if registered; reuse stable categories.
+2. **Apply the conventions** for the chosen backend: book card/LOC payments once from the bank side; route overlap to `config.overlap` accounts (and log personal-card business spend); split tax per `config.tax` if registered; reuse stable categories — **prefer the accountant's chart in `config.prior_financials.chart_of_accounts`** (matching prior-year comparatives) over inventing new ones.
 3. **Decide autonomously when confident; ask when unsure.** Post the entries you're confident about. **Stop and ask** for business-vs-personal ambiguity, unmatched transfers, a new/unknown account or vendor, or anything that would move an already-reconciled figure. For note-don't-rebook items, use **flag-expense**.
 4. **Validate.** Beancount: `bean-check <ledger main>` must pass with assertions intact. Simple ledger: sanity-check that the period ties to the statement close.
 5. **Learn.** Propose any new category/account/mapping for saving (learn protocol) before relying on it next time. Avoid double-booking re-dropped docs — check the rename ledger for the same date + vendor + amount first.

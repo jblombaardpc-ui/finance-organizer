@@ -41,8 +41,13 @@ Wait for a full answer before the next question. Map answers onto the config sch
 3. **Personal/business overlap.** Explain the pattern plainly: when the business pays a personal cost (or vice-versa), it's tracked as a loan between the owner and the business rather than an expense. Capture the account names they (or their accountant) want to use → `overlap`. If they have an accountant with preferences, note to ask them.
 4. **Locality & tax.** Country, region, currency. Tax registrations (GST/HST, VAT, sales tax): number, rate, filing cadence. Ask them to describe any local rules in their own words → `tax`. If smb-onboard ran, reuse what it captured. Do not assert tax law you're unsure of — record what they tell you and flag anything to confirm with their accountant.
 5. **Ledger choice.** Recommend **Beancount** (plain-text, auditable, and you can set it up for them — `pip install beancount` in the sandbox and scaffold a starter ledger with `scripts/init_beancount.py`). Offer the **simple** spreadsheet/CSV ledger for non-technical users. Set `ledger.backend` and create the starter ledger per `../../references/ledger-beancount.md` or `../../references/ledger-simple.md`.
-6. **Branding.** If discover-brand is installed, offer to run it and save results to `.finance-organizer/brand.md`. Otherwise do a 3-question intake (logo location, colors, voice/tone) — or skip. Used by the brand-output module.
-7. **Optional modules.** Explain each in one line and ask which to enable → `modules`:
+6. **Prior-year financials (optional).** Ask: *"Do you have audited or accountant-prepared financial statements from previous years you'd like me to use?"* If yes, this does two things for them: gives every skill **context** on how the books have historically been presented, and **locks the income/expense categories to the accountant's chart** so new entries and reports tie out against prior-year comparatives. Capture, per set of books → `prior_financials[]`:
+   - the **statement files** (have them point you at the PDFs/Excel, or drop them in the Finance Inbox; file the originals into that set's `Reports/` per the conventions and record the paths),
+   - the **accountant** who prepared them and the **years** covered,
+   - the **chart of accounts** — read the income statement and pull out the income and expense category names exactly as the accountant wrote them (e.g. "Professional Fees", "Salaries and Wages", "Professional Dues and Licences"). Show the user the extracted lists and confirm before saving → `chart_of_accounts.income` / `.expenses`. These seed the ledger's accounts (step 4) so they start on the accountant's categories rather than `Uncategorized`.
+   If they have no prior statements (e.g. a brand-new entity), skip — the ledger opens with `Uncategorized` roots and categories grow via the learn protocol.
+7. **Branding.** If discover-brand is installed, offer to run it and save results to `.finance-organizer/brand.md`. Otherwise do a 3-question intake (logo location, colors, voice/tone) — or skip. Used by the brand-output module.
+8. **Optional modules.** Explain each in one line and ask which to enable → `modules`:
    - related-party & reimbursements, health/benefit claims, one-off payment plans (pay a batch of invoices within a daily limit), **bill reminders** (recurring statement due dates + minimum payments → calendar), brand-aware outputs.
    For each enabled module, ask the few extra fields it needs (e.g. claims: plan name + eligible/ineligible lists + period end; payment-plan: daily transfer limit).
 
@@ -53,7 +58,7 @@ Wait for a full answer before the next question. Map answers onto the config sch
    `payment_plan` and `bill_reminders` use this `calendar` by default (each may set a `calendar_id` override).
 
    For **bill reminders** → `bill_reminders`: lead days (default 3), which mapped accounts to remind on and whether each is paid by hand (`manual`) or pre-authorized (`auto_debit`), and **how it should stay current** — a `recurring` scheduled task that regenerates reminders after statements land each month (ask roughly which day), or `on_demand` only. Note it's distinct from payment-plan: bill reminders tracks the recurring minimums/due dates printed on statements; payment-plan schedules paying down a one-off pile of invoices.
-8. **Financial connectors (optional).** Ask whether they use financial tools you can pull from — **accounting** (QuickBooks, Xero) and/or **payments/POS** (Square, Stripe, PayPal). Record what they want to use → `integrations` (and set `modules.integrations`). **Guide them to link each via their connector settings — never connect on their behalf.** These feed the **sync-financials** skill; if they connect nothing, everything still works from the inbox + ledger. See `../../CONNECTORS.md`.
+9. **Financial connectors (optional).** Ask whether they use financial tools you can pull from — **accounting** (QuickBooks, Xero) and/or **payments/POS** (Square, Stripe, PayPal). Record what they want to use → `integrations` (and set `modules.integrations`). **Guide them to link each via their connector settings — never connect on their behalf.** These feed the **sync-financials** skill; if they connect nothing, everything still works from the inbox + ledger. See `../../CONNECTORS.md`.
 
 ## 3. Write the config (approval gate)
 
@@ -68,7 +73,7 @@ Confirm: "Saved — every finance-organizer skill will now use this."
 
 Now that the config exists, lay everything out so documents have a home and stay organised:
 - **Folders:** run `${CLAUDE_PLUGIN_ROOT}/scripts/init_folders.py --config .finance-organizer/config.yaml` to scaffold the Finance Inbox + a tidy tree for each set of books. It's idempotent — re-run it any time the structure drifts.
-- **Ledger:** create the chosen ledger so they leave ready to book. Beancount → install it and scaffold with `${CLAUDE_PLUGIN_ROOT}/scripts/init_beancount.py --config .finance-organizer/config.yaml --set <id> --out "<set folder>/Beancount"`, then validate. Simple → create the ledger CSV with the agreed columns.
+- **Ledger:** create the chosen ledger so they leave ready to book. Beancount → install it and scaffold with `${CLAUDE_PLUGIN_ROOT}/scripts/init_beancount.py --config .finance-organizer/config.yaml --set <id> --out "<set folder>/Beancount"`, then validate. The scaffold automatically opens an `Income:`/`Expenses:` account for each category in that set's `prior_financials.chart_of_accounts` (falling back to `Uncategorized` if none were provided), so the user starts on the accountant's chart. Simple → create the ledger CSV with the agreed columns (use the same accountant categories as the category list).
 
 ## 5. Keep-it-organised workflow + what to try
 

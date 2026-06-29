@@ -23,6 +23,13 @@ All paths are **relative to the user's working folder** (portable across machine
   - `personal_card_expense_doc` — path to the "business expenses paid on personal cards" log.
   - `personal_card_expense_copies_dir` — folder in the business set holding COPIES of invoices for business expenses paid on a personal account (default `<business set>/Expenses/Paid on Personal Accounts/`; has a `Candidates (pending review)/` subfolder for unconfirmed items).
 - `accounts` — the account map; each item: `last4`, `name`, `set` (matches a `sets_of_books.id`), `role` (`operating`/`savings`/`card`/`loc`/`tax`/…), optional `owner`.
+- `prior_financials` — *optional*; prior-year **audited / accountant-prepared** financial statements the user chose to provide at onboarding. Used two ways: as **context** (so every skill knows how the books have historically been presented) and to **lock the chart of accounts** to the accountant's category names, so new entries and reports line up with prior years' comparatives. A list, one entry per set of books:
+  - `set` — which `sets_of_books.id` these belong to.
+  - `statements` — paths (relative to the working folder) to the filed prior-year statements (PDF/Excel). File the originals into that set's `Reports/` per the conventions; record their paths here.
+  - `accountant` — the firm/person who prepared them (free text), if known.
+  - `years` — which fiscal years are covered (e.g. `["FY2024", "FY2025"]`).
+  - `chart_of_accounts` — the income/expense categories the accountant used, captured verbatim so they can be reused: `income` (list of category names) and `expenses` (list of category names). The ledger scaffold (`scripts/init_beancount.py`) opens an `Income:<Category>` / `Expenses:<Category>` account for each, so the user starts on the accountant's chart instead of `Uncategorized`.
+  - `notes` — anything to remember (e.g. "match these names so year-over-year comparatives tie out", mapping quirks).
 - `tax`:
   - `registrations` — list of `{kind, number, rate, filing}` (e.g. GST/HST, VAT, sales tax).
   - `notes` — free-text local rules the user described during onboarding.

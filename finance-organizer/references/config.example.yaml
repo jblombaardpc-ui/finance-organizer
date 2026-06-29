@@ -64,6 +64,27 @@ accounts:
     set: "owner"
     role: "operating"
 
+prior_financials:               # optional — accountant/audited statements from prior years
+  - set: "business"             # which set of books these belong to
+    accountant: "Example Accounting LLP"
+    years: ["FY2024", "FY2025"]
+    statements:                 # filed copies of the prior-year financials (originals live in the set's Reports/)
+      - "Business - Example Pro Corp/FY2024/Reports/FY2024 Financial Statements.pdf"
+      - "Business - Example Pro Corp/FY2025/Reports/FY2025 Financial Statements.pdf"
+    chart_of_accounts:          # the categories the accountant used — reused verbatim so comparatives tie out
+      income:
+        - "Professional Fees"
+        - "Other Income"
+      expenses:
+        - "Salaries and Wages"
+        - "Office and Supplies"
+        - "Professional Dues and Licences"
+        - "Insurance"
+        - "Travel"
+    notes: >
+      Match these category names so year-over-year comparatives line up with the
+      accountant's statements. New categories go through the learn protocol.
+
 tax:
   registrations:
     - kind: "GST/HST"
