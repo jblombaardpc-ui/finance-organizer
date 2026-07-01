@@ -7,7 +7,7 @@ Plain-text, auditable double-entry. Works for any number of sets of books.
 1. Install: `pip install beancount --break-system-packages` (in the sandbox). Provides `bean-check` and `bean-report`.
 2. Scaffold a starter ledger per set: `scripts/init_beancount.py --config .finance-organizer/config.yaml --set <set-id> --out "<set folder>/Beancount"`. This writes `main.beancount` (options + includes), `accounts.beancount` (open directives for the config's mapped accounts + the overlap accounts + an `Income:`/`Expenses:` account per the accountant's chart from `prior_financials.chart_of_accounts`, or `Uncategorized` roots if none were provided), and `opening.beancount` (opening balances placeholder to fill from statements).
 3. Validate: `bean-check "<set folder>/Beancount/main.beancount"`. If `bean-check` isn't on PATH (pip often puts it in `~/.local/bin`), call it by full path, or validate version-proof with:
-   `python3 -c "from beancount import loader,sys; e,err,_=loader.load_file('<main>'); print(len(err),'errors'); [print(x) for x in err[:10]]"`
+   `python3 -c "import sys; from beancount import loader; e,err,_=loader.load_file('<main>'); print(len(err),'errors'); [print(x) for x in err[:10]]; sys.exit(1 if err else 0)"`
 
 ## Structure
 

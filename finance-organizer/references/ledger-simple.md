@@ -4,7 +4,7 @@ For users who don't want plain-text double-entry. One transactions ledger per se
 
 ## Structure
 
-One file per set: `<set folder>/Ledger/<set-id>-ledger.csv` (or `.xlsx`). Columns:
+One file per set: `<set folder>/Ledger/<set-id>-ledger.csv` (plain CSV — the reports script reads CSV only; keep any spreadsheet copy as an export of this file). Columns:
 
 `date, description, account, category, money_in, money_out, set, notes`
 

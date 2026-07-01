@@ -2,12 +2,16 @@
 """Batch invoices into a <=daily-limit payment plan and write a Markdown table.
 
 Usage:
-  build_payment_plan.py --invoices invoices.(csv|json) [--limit 6000] [--currency CAD] \
-      [--start-date YYYY-MM-DD] [--out plan.md] [--batch-name "May 2026 (Batch 3)"]
+  build_payment_plan.py --invoices invoices.(csv|json) --limit <daily limit> \
+      [--currency CAD] [--start-date YYYY-MM-DD] [--skip-weekends] \
+      [--out plan.md] [--batch-name "May 2026 (Batch 3)"]
 
+--limit is required — take it from config.payment_plan.daily_limit (no default,
+so a wrong hardcoded limit can never slip through).
 CSV/JSON fields per invoice: invoice, date (YYYY-MM-DD), description, amount, [gst].
 Greedy oldest-first packing; an invoice larger than the limit gets its own day (flagged).
-Dates are assigned consecutively from --start-date; adjust in the saved plan if needed.
+Dates are assigned consecutively from --start-date (--skip-weekends shifts any
+Sat/Sun payment date to the next Monday); adjust in the saved plan if needed.
 """
 import argparse, csv, json, os, datetime, sys
 
@@ -27,9 +31,12 @@ def num(x):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--invoices", required=True)
-    ap.add_argument("--limit", type=float, default=6000.0)
+    ap.add_argument("--limit", type=float, required=True,
+                    help="daily transfer limit (from config.payment_plan.daily_limit)")
     ap.add_argument("--currency", default="")
     ap.add_argument("--start-date", dest="start", default=datetime.date.today().isoformat())
+    ap.add_argument("--skip-weekends", action="store_true", dest="skip_weekends",
+                    help="shift payment dates that land on Sat/Sun to the next Monday")
     ap.add_argument("--out", default="")
     ap.add_argument("--batch-name", dest="batch", default="")
     a = ap.parse_args()
@@ -54,6 +61,14 @@ def main():
     cd = datetime.date(y, m, d)
     sym = (a.currency + " ") if a.currency else "$"
 
+    def next_pay_date(dt):
+        if a.skip_weekends:
+            while dt.weekday() >= 5:  # 5=Sat, 6=Sun
+                dt += datetime.timedelta(days=1)
+        return dt
+
+    cd = next_pay_date(cd)
+
     title = f"Payment Plan - {a.batch}" if a.batch else "Payment Plan"
     out = [f"# {title}\n",
            f"_Daily limit {sym}{a.limit:,.0f}. {len(inv)} invoice(s) over {len(days)} day(s)._\n"]
@@ -70,7 +85,7 @@ def main():
                        f"{r.get('description','')} | {sym}{r['amount']:,.2f} |")
         out.append(f"| | | **Day total** | **{sym}{dtot:,.2f}** |")
         out.append(f"| | | Running total | {sym}{running:,.2f} |")
-        cd += datetime.timedelta(days=1)
+        cd = next_pay_date(cd + datetime.timedelta(days=1))
 
     gst = sum(r["gst"] for r in inv)
     out.append(f"\n**Grand total: {sym}{grand:,.2f}**" + (f" (incl. tax {sym}{gst:,.2f})" if gst else ""))

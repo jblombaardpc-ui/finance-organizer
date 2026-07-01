@@ -9,7 +9,9 @@ any time the structure drifts.
 """
 import argparse, os, sys
 
-BUSINESS = ["Income", "Expenses", "Expenses/Receipts", "Travel", "Bank Statements", "Reports"]
+# Per references/conventions.md "Folder structure (per set)":
+# business sets keep Receipts/ at the set root (subfolders YYYY-MM/ appear as receipts are filed).
+BUSINESS = ["Income", "Expenses", "Receipts", "Travel", "Bank Statements", "Reports"]
 PERSONAL = ["Bank Statements", "Receipts", "Property", "Investments", "Insurance", "Tax", "Reports"]
 
 
@@ -46,6 +48,20 @@ def main():
             mk(os.path.join(folder, "Claims"))
         if modules.get("payment_plan") and s.get("type") == "business":
             mk(os.path.join(folder, "Payment Plans"))
+
+    # Overlap: the copies dir for business expenses paid on personal accounts,
+    # plus the Candidates subfolder file-inbox relies on (see conventions.md).
+    ov = cfg.get("overlap", {}) or {}
+    if ov:
+        copies = ov.get("personal_card_expense_copies_dir")
+        if not copies:
+            biz = [s for s in cfg.get("sets_of_books", []) if s.get("type") == "business"]
+            if biz:
+                folder = biz[0].get("folder") or biz[0]["id"]
+                copies = os.path.join(folder, "Expenses", "Paid on Personal Accounts")
+        if copies:
+            mk(copies)
+            mk(os.path.join(copies, "Candidates (pending review)"))
 
     print(f"folders ready under {base}: {len(created)} created, rest already existed")
     for c in created:

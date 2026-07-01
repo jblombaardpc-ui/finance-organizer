@@ -6,8 +6,10 @@ Usage:
       [--original <orig_path_or_name>] [--action move] \
       [--fiscal-year ""] [--notes ""] [--base <dir>]
 
-Computes the md5 of --new. With --base, new_path is stored relative to that dir.
-Actions: move, folder-rename, dedupe-delete, delete.
+Computes the md5 of --new (also for delete/dedupe-delete rows, when the file
+still exists at logging time — log BEFORE deleting). With --base, new_path is
+stored relative to that dir.
+Actions are free text; common: move, folder-rename, dedupe-delete, delete, copy, generate.
 """
 import argparse, csv, hashlib, os, datetime, sys
 
@@ -38,7 +40,7 @@ def main():
     if not is_delete and not os.path.exists(a.new):
         print("ERROR: new file not found:", a.new); sys.exit(2)
 
-    digest = md5(a.new) if (not is_delete and os.path.exists(a.new)) else ""
+    digest = md5(a.new) if os.path.exists(a.new) else ""
     new_p = os.path.relpath(a.new, a.base) if a.base else a.new
     orig_name = os.path.basename(a.original) if a.original else ""
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")

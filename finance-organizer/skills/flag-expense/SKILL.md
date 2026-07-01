@@ -10,7 +10,7 @@ description: >
 
 # Flag a transaction (annotate, don't rebook)
 
-When the user asks to "flag" something they mean **note it for later review, not change the numbers**. Leave the entry as-booked so reconciled figures don't move until they confirm. Read `.finance-organizer/config.yaml` for the relevant accounts/parties.
+When the user asks to "flag" something they mean **note it for later review, not change the numbers**. Leave the entry as-booked so reconciled figures don't move until they confirm. Read `.finance-organizer/config.yaml` for the relevant accounts/parties. If there's no config, run **finance-onboard** first.
 
 ## Apply in BOTH places
 

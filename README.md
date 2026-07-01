@@ -10,8 +10,8 @@ This is a standard `SKILL.md` plugin/marketplace, so it works on any agent that 
 
 ### Claude (Cowork / desktop)
 
-- **Marketplace (recommended):** open **Customize → Plugins**, click **＋ → Add marketplace → Add from a repository**, and point it at this GitHub repo. Then install **finance-organizer**.
-- **Or the packaged file:** install `finance-organizer.plugin` directly (Customize → Plugins → upload a custom plugin).
+- **Marketplace (recommended):** open **Settings → Capabilities → Plugins**, add a marketplace **from a repository**, and point it at this GitHub repo. Then install **finance-organizer**.
+- **Or the packaged file:** install `finance-organizer-0.6.0.plugin` (at the repo root) directly (Settings → Capabilities → Plugins → upload a custom plugin).
 
 See Anthropic's [Use plugins in Claude](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
 
@@ -42,7 +42,7 @@ The skills call helper scripts via Claude's `${CLAUDE_PLUGIN_ROOT}` path variabl
 
 ### Share with a friend
 
-Send them this repo (or the `.plugin` file); they set it up with any of the above, then say **"set up my finances"**.
+Send them this repo (or the `finance-organizer-0.6.0.plugin` file); they set it up with any of the above, then say **"set up my finances"**.
 
 ## Recommended companions (optional)
 

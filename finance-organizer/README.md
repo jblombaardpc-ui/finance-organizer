@@ -38,7 +38,9 @@ Everything is driven by `.finance-organizer/config.yaml` in the user's working f
 
 ## Dependencies
 
-- `bean-check` (Beancount) when the Beancount backend is chosen — onboarding can `pip install beancount` in the sandbox.
+- `pyyaml` — **required** by the config-driven scripts (`init_folders.py`, `init_beancount.py`, `reports.py`, `config_get.py`): `pip install pyyaml --break-system-packages`.
+- `pypdf` — **required** by `split_scan.py` (bulk-scan splitting in file-inbox): `pip install pypdf --break-system-packages`.
+- `bean-check` (Beancount) when the Beancount backend is chosen — onboarding can `pip install beancount --break-system-packages` in the sandbox.
 - `openpyxl` for spreadsheet outputs; `pdftotext` (poppler) for content-level dedup (optional).
 - Calendar steps (payment-plan, bill-reminders, claims reminders) are **provider-agnostic** — they use whatever calendar connector you've linked (Google Calendar, Microsoft Outlook / Office 365, …). Onboarding recommends a dedicated "Finance" calendar and records `provider`/`id`/`timezone` in `config.yaml` → `calendar`. See `CONNECTORS.md`.
 - *Optional:* the **finance** plugin for advanced close / GAAP statements / variance / audit — the built-in `reports` skill covers everyday statements.

@@ -34,6 +34,7 @@ flowchart TD
         RPY[related-party]
         CH[claims-helper]
         PP[payment-plan]
+        BR[bill-reminders]
         BO[brand-output]
         SF[sync-financials]
     end
@@ -90,6 +91,7 @@ On a return visit it never re-interviews — it loads your config, shows the pro
 | **related-party** *(opt)* | "reimbursement owed", "we paid X's bill" | Tracks contributions and reimbursements between your entities; flags misdirected payments. |
 | **claims-helper** *(opt)* | "add this to my claim" | Maintains a per-period claims tracker/form (e.g. a health-spending account) and carries it forward each period. |
 | **payment-plan** *(opt)* | "build a payment plan" | Batches invoices within a configurable daily transfer limit, saves a plan, and adds calendar reminders. |
+| **bill-reminders** *(opt)* | "track my due dates", "when are my bills due" | Reads the latest statement per credit/loan account for the due date + minimum payment, maintains a Payments Due tracker, and puts reminders on your calendar ahead of each (manual = "pay", pre-authorized = "ensure funds"). |
 | **brand-output** *(opt)* | "make an invoice/report" | Applies your captured branding to generated documents. |
 | **sync-financials** *(opt)* | "sync Square/QuickBooks", "import my sales" | Pulls invoices/sales from connected payment tools and reconciles against your accounting tool — tool-agnostic. |
 | **learn** | (any skill triggers it) | Proposes saving a new rule/mapping to memory or config — always confirm-before-save. |
@@ -204,6 +206,7 @@ modules:
   related_party: false
   claims_helper: false
   payment_plan: false
+  bill_reminders: false
   brand_output: false
   integrations: false
 ```
@@ -273,7 +276,7 @@ When you ask, Claude edits the files in place, you review, and you commit/push a
 Friends can install in either of two ways:
 
 1. **Marketplace (recommended):** Settings → Capabilities → Plugins → add marketplace → from repository, then enable `finance-organizer`. Updates flow through git.
-2. **`.plugin` file:** install the packaged `finance-organizer-<version>.plugin` directly.
+2. **`.plugin` file:** install the packaged `finance-organizer-0.6.0.plugin` (at the repo root) directly.
 
 Then they just say **"set up my finances"** and the onboarding takes it from there.
 

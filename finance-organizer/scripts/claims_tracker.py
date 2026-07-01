@@ -23,6 +23,24 @@ def main():
     ap.add_argument("--tax-on-fee-pct", type=float, default=0.0, dest="tax")
     a = ap.parse_args()
 
+    # Validate ALL items first so a bad one can't leave a partial append.
+    rows = []
+    for it in a.item:
+        parts = [p.strip() for p in it.split("|")]
+        if len(parts) < 4:
+            sys.exit(f"Bad --item (need Patient|Date|Desc|Amount[|Y/N]): {it}")
+        if len(parts) > 5:
+            sys.exit(f"Too many '|' fields in --item: {it}\n"
+                     "  '|' is the field separator — remove it from the description "
+                     "(use a dash or 'and' instead).")
+        patient, sdate, desc, amt = parts[0], parts[1], parts[2], parts[3]
+        elig = (parts[4] if len(parts) > 4 else "Y").upper()[:1]
+        try:
+            amt = float(amt)
+        except ValueError:
+            sys.exit(f"Bad amount in --item: {parts[3]}")
+        rows.append([sdate, patient, desc, f"{amt:.2f}", elig, ""])
+
     d = os.path.dirname(a.tracker)
     if d:
         os.makedirs(d, exist_ok=True)
@@ -31,21 +49,8 @@ def main():
         w = csv.writer(f)
         if need_header:
             w.writerow(HEADER)
-        for it in a.item:
-            parts = [p.strip() for p in it.split("|")]
-            if len(parts) < 4:
-                sys.exit(f"Bad --item (need Patient|Date|Desc|Amount[|Y/N]): {it}")
-            if len(parts) > 5:
-                sys.exit(f"Too many '|' fields in --item: {it}\n"
-                         "  '|' is the field separator — remove it from the description "
-                         "(use a dash or 'and' instead).")
-            patient, sdate, desc, amt = parts[0], parts[1], parts[2], parts[3]
-            elig = (parts[4] if len(parts) > 4 else "Y").upper()[:1]
-            try:
-                float(amt)
-            except ValueError:
-                sys.exit(f"Bad amount in --item: {amt}")
-            w.writerow([sdate, patient, desc, f"{float(amt):.2f}", elig, ""])
+        for row in rows:
+            w.writerow(row)
 
     # cumulative totals over eligible rows
     total = 0.0

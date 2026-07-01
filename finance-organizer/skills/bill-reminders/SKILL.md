@@ -55,7 +55,8 @@ say so in the event so the minimum isn't mistaken for the amount to pay.
    missing), flag that the data may be stale and that a newer statement should be filed.
 
 3. **Update the tracker.** Maintain a single "Payments Due" table at
-   `bill_reminders.tracker_path` (default `Reports/Payments Due.md` in the primary set, or
+   `bill_reminders.tracker_path` (default `Reports/Payments Due.md` in the **primary set**
+   — the first entry in `config.sets_of_books`, per `references/config-schema.md` — or
    a sensible per-set location). One row per account: account, set, balance, minimum / fixed
    payment, due date, mode, and the statement date it came from. Overwrite the row for an
    account each time you refresh it.
@@ -66,7 +67,7 @@ say so in the event so the minimum isn't mistaken for the amount to pay.
    one event per account, `lead_days` (default 3) **before** the due date, at ~09:00 local time:
    - title: `Pay <account> — due <Mon D>` (manual) or `Ensure funds: <account> — auto-debit <Mon D>` (auto_debit);
    - description: balance, minimum (or fixed) payment, exact due date, the source statement date, and the "minimum is the floor — you normally pay in full" note for revolving accounts;
-   - `overrideReminders`: a popup the day before (1440 min) and at start (0 min).
+   - event reminders: set a popup/notification the day before and one at the event start, using whatever reminder mechanism the connected calendar connector exposes.
    If a reminder for the same account + due date already exists, update it rather than
    duplicating. Keep events short (15 min) and use the calendar's local timezone.
 

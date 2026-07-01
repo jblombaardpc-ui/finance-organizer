@@ -32,6 +32,11 @@ def money(x):
     return f"{float(x):,.2f}"
 
 
+def num(x):
+    """Tolerate '1,200', '$45.00', blanks."""
+    return float(str(x).replace("$", "").replace(",", "").strip() or 0)
+
+
 def beancount_report(ledger_main, start, end, cur):
     from beancount import loader
     from beancount.core import data
@@ -97,7 +102,7 @@ def simple_report(csv_path, start, end, cur):
                 continue
             if not (start <= dd <= end):
                 continue
-            net = (float(r.get("money_in") or 0) - float(r.get("money_out") or 0))
+            net = num(r.get("money_in")) - num(r.get("money_out"))
             cats[r.get("category") or "(uncategorized)"] = cats.get(r.get("category") or "(uncategorized)", 0.0) + net
             accts[r.get("account") or "(unknown)"] = accts.get(r.get("account") or "(unknown)", 0.0) + net
     inflow = sum(v for v in cats.values() if v > 0)
@@ -139,9 +144,9 @@ def main():
             f"_Period: {a.period} ({start} to {end}) · {cur} · {backend} ledger_", ""]
     body = []
     if backend == "beancount":
-        main_path = s.get("ledger_main") or cfg.get("ledger", {}).get("beancount_main")
+        main_path = s.get("ledger_main")
         if not main_path:
-            sys.exit("no beancount ledger_main for this set in config")
+            sys.exit(f"set '{a.setid}' has no ledger_main in config; add one under sets_of_books")
         if not os.path.isabs(main_path):
             main_path = os.path.join(base, main_path)
         is_acc, bs_acc, earn = beancount_report(main_path, start, end, cur)
